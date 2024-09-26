@@ -21,11 +21,12 @@ public class MyLibraryController {
 	 * @return ArrayList of LibraryNodes matching the search parameters
 	 */
 	public ArrayList<LibraryNode> search(int option, String search) {
-		if (option == 0) {
+		switch (option) {
+		case 1:
 			return model.findByTitle(search);
-		} else if (option == 1) {
+		case 2:
 			return model.findByAuthor(search);
-		} else {
+		default:
 			return model.findByRating(Integer.parseInt(search));
 		}
 	}
@@ -34,7 +35,7 @@ public class MyLibraryController {
 	 * adds a single book to the model's library
 	 */
 	public void addBook(String title, String author) {
-		model.addBook(title, author);
+		model.addNode(title, author);
 	}
 
 	/**
