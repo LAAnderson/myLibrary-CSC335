@@ -13,7 +13,7 @@ public class MyLibrary {
 		MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
 
 		System.out.println("Welcome to Your Library");
-		String userInput = "help";
+		String userInput = s.nextLine().toLowerCase();
 
 		/*
 		 * All strings should be stored as lower case, user input will be cast to lower
@@ -22,8 +22,6 @@ public class MyLibrary {
 		 * 
 		 */
 		while (!userInput.equals("exit")) {
-			userInput = s.nextLine().toLowerCase();
-
 			if (userInput.equals("search")) { // Carson
 
 			} else if (userInput.equals("addbook")) { // Logan
@@ -43,6 +41,8 @@ public class MyLibrary {
 			} else {
 				System.out.println("Invalid Command. Try 'help");
 			}
+			
+			userInput = s.nextLine().toLowerCase();
 		}
 
 		s.close();
