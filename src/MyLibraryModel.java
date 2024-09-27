@@ -105,8 +105,9 @@ public class MyLibraryModel {
 
   public LibraryNode suggestRead() {
     Random rand = new Random();
-    // ArrayList unreadBooks = 
-    return new LibraryNode("", "");
+    ArrayList unreadBooks = getUnreadBooks();
+    LibraryNode selected = unreadBooks.get(rand.nextInt() % unreadBooks.size());
+    return selected;
   }
   
   public void addBooks(String title, String author) {
