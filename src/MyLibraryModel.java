@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * @author Carson Heyman
@@ -89,7 +90,24 @@ public class MyLibraryModel {
     return new LibraryNode("", "");
   }
   
-  public void addBooks(String title, String author) {
-    
+  /**
+   * @param name of the file containing the books to be added
+   * creates and adds LibraryNodes from the input file to the library
+   */
+  public void addBooks(String fileName) {
+	  Scanner s = new Scanner(fileName);
+	  ArrayList<String> titles = new ArrayList<String>();
+	  ArrayList<String> authors = new ArrayList<String>();
+	  
+	  while (s.hasNext()) {
+		  String currLine = s.next();
+		  titles.add(currLine.substring(0, currLine.indexOf(';')));
+		  authors.add(currLine.substring(currLine.indexOf(';')+1));
+	  }
+	  
+	  for (int i = 0; i < titles.size(); i++) 
+		  this.addNode(titles.get(i), authors.get(i));
+	  
+	  s.close();
   }
 }
