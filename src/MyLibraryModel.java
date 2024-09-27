@@ -106,7 +106,7 @@ public class MyLibraryModel {
 
   public LibraryNode suggestRead() {
     Random rand = new Random();
-    ArrayList unreadBooks = getUnreadBooks();
+    ArrayList<LibraryNode> unreadBooks = getUnreadBooks();
     LibraryNode selected = unreadBooks.get(rand.nextInt() % unreadBooks.size());
     return selected;
   }
