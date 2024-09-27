@@ -69,10 +69,10 @@ public class MyLibraryModel {
   public ArrayList<LibraryNode> getBooks(int option) {
     ArrayList<LibraryNode> sorted;
     if (option == 1) {
-      sorted = library.clone();
+      sorted = (ArrayList<LibraryNode>)library.clone();
       Collections.sort(sorted, new LibraryNode.compareByTitle());
     } else if (option == 2) {
-      sorted = library.clone();
+      sorted = (ArrayList<LibraryNode>)library.clone();
       Collections.sort(sorted, new LibraryNode.compareByAuthor());
     } else if (option == 3) {
       sorted = getReadBooks();
