@@ -62,32 +62,53 @@ public class MyLibraryModel {
     node.setRating(rating);
   }
   
-  public ArrayList getBooks(int option) {
-    ArrayList<LibraryNode> sorted = new ArrayList<>();
-    switch (option) {
-      case 1: // all books sorted by title
-        Collections.sort(sorted, new LibraryNode.compareByTitle());
-        break;
-      case 2: // all books sorted by author
-        Collections.sort(sorted, new LibraryNode.compareByAuthor());
-        break;
-      case 3: // all books that have been read
-        Collections.sort(sorted, new LibraryNode.compareByTitle());
-        break;
-      case 4: // all books that have not been read
-        Collections.sort(sorted, new LibraryNode.compareByTitle());
-        break;
-
-      default:
-        break;
+  /**
+   * @pre
+   * option = [1 .. 4]
+   */
+  public ArrayList<LibraryNode> getBooks(int option) {
+    ArrayList<LibraryNode> sorted;
+    if (option == 1) {
+      sorted = library.clone();
+      Collections.sort(sorted, new LibraryNode.compareByTitle());
+    } else if (option == 2) {
+      sorted = library.clone();
+      Collections.sort(sorted, new LibraryNode.compareByAuthor());
+    } else if (option == 3) {
+      sorted = getReadBooks();
+      Collections.sort(sorted, new LibraryNode.compareByTitle());
+    } else {
+      sorted = getUnreadBooks();
+      Collections.sort(sorted, new LibraryNode.compareByTitle());
     }
     return sorted;
   }
 
+  private ArrayList<LibraryNode> getReadBooks() {
+    ArrayList<LibraryNode> found = new ArrayList<>();
+    for (LibraryNode node : library) {
+      if (node.getIsRead()) {
+        found.add(node);
+      }
+    }
+    return found;
+  }
+
+  private ArrayList<LibraryNode> getUnreadBooks() {
+    ArrayList<LibraryNode> found = new ArrayList<>();
+    for (LibraryNode node : library) {
+      if (!node.getIsRead()) {
+        found.add(node);
+      }
+    }
+    return found;
+  }
+
   public LibraryNode suggestRead() {
     Random rand = new Random();
-    // ArrayList unreadBooks = 
-    return new LibraryNode("", "");
+    ArrayList unreadBooks = getUnreadBooks();
+    LibraryNode selected = unreadBooks.get(rand.nextInt() % unreadBooks.size());
+    return selected;
   }
   
   /**
