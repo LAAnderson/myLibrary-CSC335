@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * @author Carson Heyman
+ * @authors Carson Heyman, Logan Anderson
  * 
  * Model for the library. Contains various searching and sorting
  * methods.
