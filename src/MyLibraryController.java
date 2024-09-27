@@ -6,7 +6,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MyLibraryController {
 	public MyLibraryController(MyLibraryModel model) {
