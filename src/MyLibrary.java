@@ -60,7 +60,23 @@ public class MyLibrary {
 			} else if (userInput.equals("rate")) { // Logan
 
 			} else if (userInput.equals("getbooks")) { // Carson
+				while (!userInput.equals("exit")) {
+					System.out.println("Enter the number representing which set of books to retrieve [1 .. 4]\n1 - all books sorted by title\n2 - all books sorted by author\n3 - books that have been read\n4 - books that have not been read");
+					userInput = s.nextLine();
+					
+					if (userInput.equals("1") || userInput.equals("2") || userInput.equals("3") || userInput.equals("4")) {
+						System.out.println("Books:");
+					} else if (userInput.equals("exit")) {
+						continue;
+					} else {
+						System.out.println("\u001B[31m" + "Invalid input!" + "\u001B[0m");
+						continue;
+					}
 
+					ArrayList<LibraryNode> bookList = controller.getBooks(Integer.parseInt(userInput));
+					printBookList(bookList);
+					break;
+				}
 			} else if (userInput.equals("suggestread")) { // Logan
 
 			} else if (userInput.equals("addbooks")) { // Carson
