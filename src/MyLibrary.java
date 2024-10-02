@@ -101,10 +101,7 @@ public class MyLibrary {
 						+ "addBooks:\tadd multiple books from a file formatted as (title;author)\n"
 						+ "exit:\t\tterminate library");
 			} else {
-//<<<<<<< HEAD
-//=======
 				System.out.println("\u001B[31m" + "Invalid Command. Try 'help'" + "\u001B[0m");
-//>>>>>>> 949a540cfb222e5cb576a89fdb2a029d3e5b783e
 			}
 
 			System.out.println("Enter a command: ");
