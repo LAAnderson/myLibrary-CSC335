@@ -14,7 +14,7 @@ public class MyLibrary {
 		MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
 
 		System.out.println("Welcome to Your Library");
-    System.out.println("Enter a command: ");
+		System.out.println("Enter a command: ");
 		String userInput = s.nextLine().toLowerCase();
 
 		/*
@@ -53,7 +53,10 @@ public class MyLibrary {
 			} else if (userInput.equals("addbook")) { // Logan
 
 			} else if (userInput.equals("settoread")) { // Carson
-
+				System.out.println("Enter the book title: ");
+				String title = s.nextLine();
+				controller.setToRead(title);
+				System.out.println("\u001B[32m"+ "Successfully set '" + title + "' to read." + "\u001B[0m");
 			} else if (userInput.equals("rate")) { // Logan
 
 			} else if (userInput.equals("getbooks")) { // Carson

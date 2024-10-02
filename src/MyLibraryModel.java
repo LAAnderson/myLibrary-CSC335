@@ -53,13 +53,19 @@ public class MyLibraryModel {
   }
 
   public void setToRead(String title) {
-    LibraryNode node = findByTitle(title).get(0);
-    node.read();
+    ArrayList<LibraryNode> books = findByTitle(title);
+    if (books.size() >= 1) {
+      LibraryNode node = books.get(0);
+      node.read();
+    }
   }
 
   public void rate(String title, int rating) {
-    LibraryNode node = findByTitle(title).get(0);
-    node.setRating(rating);
+    ArrayList<LibraryNode> books = findByTitle(title);
+    if (books.size() >= 1) {
+      LibraryNode node = books.get(0);
+      node.setRating(rating);
+    }
   }
   
   /**
