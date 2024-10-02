@@ -56,6 +56,7 @@ public class LibraryNode {
 
 	@Override
 	public String toString() {
-		return this.book.toString() + ", Read: " + this.isRead + ", Rating: " + this.rating + "/5";
+		return this.book.toString() + (this.isRead ? ", Read" : ", Unread") + ", Rating: "
+				+ (this.rating == 0 ? "unrated" : this.rating + "/5");
 	}
 }
