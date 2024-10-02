@@ -22,6 +22,6 @@ public final class Book {
 
 	@Override
 	public String toString() {
-		return this.title + " by " + this.author;
+		return this.title + ", by " + this.author;
 	}
 }

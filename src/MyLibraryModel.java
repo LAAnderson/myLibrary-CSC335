@@ -53,28 +53,34 @@ public class MyLibraryModel {
   }
 
   public void setToRead(String title) {
-    LibraryNode node = findByTitle(title).get(0);
-    node.read();
+    ArrayList<LibraryNode> books = findByTitle(title);
+    if (books.size() >= 1) {
+      LibraryNode node = books.get(0);
+      node.read();
+    }
   }
 
   public void rate(String title, int rating) {
-    LibraryNode node = findByTitle(title).get(0);
-    node.setRating(rating);
+    ArrayList<LibraryNode> books = findByTitle(title);
+    if (books.size() >= 1) {
+      LibraryNode node = books.get(0);
+      node.setRating(rating);
+    }
   }
   
   /**
    * @pre
-   * option = [1 .. 4]
+   * option = [0 .. 3]
    */
   public ArrayList<LibraryNode> getBooks(int option) {
     ArrayList<LibraryNode> sorted;
-    if (option == 1) {
+    if (option == 0) {
       sorted = (ArrayList<LibraryNode>)library.clone();
       Collections.sort(sorted, new LibraryNode.compareByTitle());
-    } else if (option == 2) {
+    } else if (option == 1) {
       sorted = (ArrayList<LibraryNode>)library.clone();
       Collections.sort(sorted, new LibraryNode.compareByAuthor());
-    } else if (option == 3) {
+    } else if (option == 2) {
       sorted = getReadBooks();
       Collections.sort(sorted, new LibraryNode.compareByTitle());
     } else {
