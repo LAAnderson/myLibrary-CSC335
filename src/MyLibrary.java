@@ -81,11 +81,7 @@ public class MyLibrary {
 				}
 
 			} else if (userInput.equals("getbooks")) { // Carson
-				ArrayList<LibraryNode> books = controller.getBooks(0);
-				for (LibraryNode l : books) {
-					System.out.println(l.toString());
-				}
-
+				
 			} else if (userInput.equals("suggestread")) { // Logan
 				System.out.println(controller.suggestRead().getBook().getTitle() + ", by "
 						+ controller.suggestRead().getBook().getAuthor());
