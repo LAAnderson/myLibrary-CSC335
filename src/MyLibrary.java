@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 
 /**
  * @authors Carson Heyman, Logan Anderson
@@ -103,7 +104,14 @@ public class MyLibrary {
 						+ controller.suggestRead().getBook().getAuthor());
 
 			} else if (userInput.equals("addbooks")) { // Carson
-
+				try {
+					System.out.println("Enter the filename:");
+					String filename = s.nextLine();
+					controller.addBooks(filename);
+					System.out.println("\u001B[32m" + "Books added successfully" + "\u001B[0m");
+				} catch (FileNotFoundException e) {
+					System.out.println("\u001B[31m" + "File not found!" + "\u001B[0m");
+				}
 			} else if (userInput.equals("help")) { // Logan
 				System.out.println("search: \tsearch for a book by title (0), author (1), or rating(2)\n"
 						+ "addBook:\tadd a book to your library\n" + "setToRead:\tset a book in your library to read\n"

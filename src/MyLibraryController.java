@@ -6,6 +6,7 @@
  */
 
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
 public class MyLibraryController {
 	public MyLibraryController(MyLibraryModel model) {
@@ -74,7 +75,7 @@ public class MyLibraryController {
 	/**
 	 * adds LibraryNodes to model's library read in from fileName
 	 */
-	public void addBooks(String fileName) {
+	public void addBooks(String fileName) throws FileNotFoundException {
 		model.addBooks(fileName);
 	}
 }

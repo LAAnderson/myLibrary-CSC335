@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * @authors Carson Heyman, Logan Anderson
@@ -120,8 +122,8 @@ public class MyLibraryModel {
 	 * @param name of the file containing the books to be added creates and adds
 	 *             LibraryNodes from the input file to the library
 	 */
-	public void addBooks(String fileName) {
-		Scanner s = new Scanner(fileName);
+	public void addBooks(String fileName) throws FileNotFoundException{
+		Scanner s = new Scanner(new File(fileName));
 		ArrayList<String> titles = new ArrayList<String>();
 		ArrayList<String> authors = new ArrayList<String>();
 
