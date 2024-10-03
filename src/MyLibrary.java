@@ -46,7 +46,7 @@ public class MyLibrary {
 						continue;
 					}
 
-					userInput = s.nextLine();
+					userInput = s.nextLine().toLowerCase();
 					String search = userInput;
 					int optionInt = Integer.parseInt(option);
 					ArrayList<LibraryNode> found = controller.search(optionInt, search);
@@ -64,7 +64,7 @@ public class MyLibrary {
 
 			} else if (userInput.equals("settoread")) { // Carson
 				System.out.println("Enter the book title: ");
-				String title = s.nextLine();
+				String title = s.nextLine().toLowerCase();
 				controller.setToRead(title);
 				System.out.println("\u001B[32m" + "Successfully set '" + title + "' to read." + "\u001B[0m");
 
@@ -72,21 +72,23 @@ public class MyLibrary {
 				System.out.print("title: ");
 				String t = s.nextLine().toLowerCase();
 				System.out.print("rating [1 - 5]: ");
-				int r = Integer.parseInt(s.nextLine());
+				String r = s.nextLine();
 
 				try {
-					controller.rate(t, r);
+					controller.rate(t, Integer.parseInt(r));
 					System.out.println("\u001B[32m" + "Rating added successfully" + "\u001B[0m");
-				} catch (Exception ArrayIndexOutOfBoundsException) {
+				} catch (ArrayIndexOutOfBoundsException e) {
 					System.out.println("\u001B[31m" + "Book not in library." + "\u001B[0m");
 				}
 
 			} else if (userInput.equals("getbooks")) { // Carson
 				while (!userInput.equals("exit")) {
-					System.out.println("Enter the number representing which set of books to retrieve [1 .. 4]\n1 - all books sorted by title\n2 - all books sorted by author\n3 - books that have been read\n4 - books that have not been read");
+					System.out.println(
+							"Enter the number representing which set of books to retrieve [1 .. 4]\n1 - all books sorted by title\n2 - all books sorted by author\n3 - books that have been read\n4 - books that have not been read");
 					userInput = s.nextLine();
-					
-					if (userInput.equals("1") || userInput.equals("2") || userInput.equals("3") || userInput.equals("4")) {
+
+					if (userInput.equals("1") || userInput.equals("2") || userInput.equals("3")
+							|| userInput.equals("4")) {
 						System.out.println("Books:");
 					} else if (userInput.equals("exit")) {
 						continue;
@@ -100,8 +102,8 @@ public class MyLibrary {
 					break;
 				}
 			} else if (userInput.equals("suggestread")) { // Logan
-				System.out.println(controller.suggestRead().getBook().getTitle() + ", by "
-						+ controller.suggestRead().getBook().getAuthor());
+				LibraryNode suggestion = controller.suggestRead();
+				System.out.println(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
 
 			} else if (userInput.equals("addbooks")) { // Carson
 				try {

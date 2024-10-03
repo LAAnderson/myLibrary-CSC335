@@ -32,14 +32,14 @@ public class MyLibraryController {
 	}
 
 	/**
-	 * adds a single book to the model's library
+	 * @post adds a single book to the model's library
 	 */
 	public void addBook(String title, String author) {
 		model.addNode(title, author);
 	}
 
 	/**
-	 * sets LibraryNode with book of this title's isRead to true
+	 * @post sets LibraryNode with book of this title's isRead to true
 	 */
 	public void setToRead(String title) {
 		model.setToRead(title);

@@ -128,7 +128,7 @@ public class MyLibraryModel {
 		ArrayList<String> authors = new ArrayList<String>();
 
 		while (s.hasNext()) {
-			String currLine = s.nextLine();
+			String currLine = s.nextLine().toLowerCase();
 			titles.add(currLine.substring(0, currLine.indexOf(';')));
 			authors.add(currLine.substring(currLine.indexOf(';') + 1));
 		}
