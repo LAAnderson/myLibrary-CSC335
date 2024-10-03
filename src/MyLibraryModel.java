@@ -1,3 +1,9 @@
+/**
+ * @authors Carson Heyman (username: cheyman), Logan Anderson (username: logananderson)
+ * 
+ *          Model for the library. Contains various searching and sorting
+ *          methods.
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -5,11 +11,12 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-/**
- * @authors Carson Heyman, Logan Anderson
- * 
- *          Model for the library. Contains various searching and sorting
- *          methods.
+/*
+ * Encapsulation is maintained by only allowing primitive or immutable types
+ * to escape. We only accept ints or Strings as parameters. When we return a
+ * sorted list of the library we make sure to clone. Other than that all the
+ * other ArrayLists being returned are not the library instance variable, 
+ * but are instead constructed by iterating through library's elements.
  */
 public class MyLibraryModel {
 
