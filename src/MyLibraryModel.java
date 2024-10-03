@@ -75,13 +75,13 @@ public class MyLibraryModel {
 	 */
 	public ArrayList<LibraryNode> getBooks(int option) {
 		ArrayList<LibraryNode> sorted;
-		if (option == 0) {
+		if (option == 1) {
 			sorted = (ArrayList<LibraryNode>) library.clone();
 			Collections.sort(sorted, new LibraryNode.compareByTitle());
-		} else if (option == 1) {
+		} else if (option == 2) {
 			sorted = (ArrayList<LibraryNode>) library.clone();
 			Collections.sort(sorted, new LibraryNode.compareByAuthor());
-		} else if (option == 2) {
+		} else if (option == 3) {
 			sorted = getReadBooks();
 			Collections.sort(sorted, new LibraryNode.compareByTitle());
 		} else {
@@ -128,7 +128,7 @@ public class MyLibraryModel {
 		ArrayList<String> authors = new ArrayList<String>();
 
 		while (s.hasNext()) {
-			String currLine = s.next();
+			String currLine = s.nextLine();
 			titles.add(currLine.substring(0, currLine.indexOf(';')));
 			authors.add(currLine.substring(currLine.indexOf(';') + 1));
 		}
