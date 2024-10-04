@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 /**
- * @authors Carson Heyman, Logan Anderson
+ * @authors Logan Anderson (username: logananderson), Carson Heyman (username: cheyman)
  * 
  *          Handles the user interactions for the MyLibrary project
  */
@@ -18,15 +18,11 @@ public class MyLibrary {
 		System.out.println("Enter a command: ");
 		String userInput = s.nextLine().toLowerCase();
 
-		/*
-		 * All strings should be stored as lower case, user input will be cast to lower
-		 * case
-		 * 
-		 * 
-		 */
+		
+		
 		while (!userInput.equals("exit")) {
 
-			if (userInput.equals("search")) { // Carson
+			if (userInput.equals("search")) { 
 				while (!userInput.equals("exit")) {
 					System.out.println(
 							"Enter the number representing the search method [1 .. 3]\n1 - title\n2 - author\n3 - rating");
@@ -53,7 +49,7 @@ public class MyLibrary {
 					printBookList(found);
 					break;
 				}
-			} else if (userInput.equals("addbook")) { // Logan
+			} else if (userInput.equals("addbook")) { 
 				System.out.print("title: ");
 				String t = s.nextLine().toLowerCase();
 				System.out.print("author: ");
@@ -62,13 +58,13 @@ public class MyLibrary {
 				controller.addBook(t, a);
 				System.out.println("\u001B[32m" + "Successfully added '" + t + "', by '" + a + "'" + "\u001B[0m");
 
-			} else if (userInput.equals("settoread")) { // Carson
+			} else if (userInput.equals("settoread")) { 
 				System.out.println("Enter the book title: ");
 				String title = s.nextLine().toLowerCase();
 				controller.setToRead(title);
 				System.out.println("\u001B[32m" + "Successfully set '" + title + "' to read." + "\u001B[0m");
 
-			} else if (userInput.equals("rate")) { // Logan
+			} else if (userInput.equals("rate")) { 
 				System.out.print("title: ");
 				String t = s.nextLine().toLowerCase();
 				System.out.print("rating [1 - 5]: ");
@@ -81,7 +77,7 @@ public class MyLibrary {
 					System.out.println("\u001B[31m" + "Book not in library." + "\u001B[0m");
 				}
 
-			} else if (userInput.equals("getbooks")) { // Carson
+			} else if (userInput.equals("getbooks")) { 
 				while (!userInput.equals("exit")) {
 					System.out.println(
 							"Enter the number representing which set of books to retrieve [1 .. 4]\n1 - all books sorted by title\n2 - all books sorted by author\n3 - books that have been read\n4 - books that have not been read");
@@ -101,11 +97,11 @@ public class MyLibrary {
 					printBookList(bookList);
 					break;
 				}
-			} else if (userInput.equals("suggestread")) { // Logan
+			} else if (userInput.equals("suggestread")) { 
 				LibraryNode suggestion = controller.suggestRead();
 				System.out.println(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
 
-			} else if (userInput.equals("addbooks")) { // Carson
+			} else if (userInput.equals("addbooks")) { 
 				try {
 					System.out.println("Enter the filename:");
 					String filename = s.nextLine();
@@ -114,7 +110,7 @@ public class MyLibrary {
 				} catch (FileNotFoundException e) {
 					System.out.println("\u001B[31m" + "File not found!" + "\u001B[0m");
 				}
-			} else if (userInput.equals("help")) { // Logan
+			} else if (userInput.equals("help")) { 
 				System.out.println("search: \tsearch for a book by title (0), author (1), or rating(2)\n"
 						+ "addBook:\tadd a book to your library\n" + "setToRead:\tset a book in your library to read\n"
 						+ "rate:\t\trate a book in your library\n"

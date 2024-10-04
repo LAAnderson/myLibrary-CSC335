@@ -116,7 +116,7 @@ public class MyLibraryModel {
 	}
 
 	/**
-	 * @pre option = [0 .. 3]
+	 * @pre option = [1 .. 4]
 	 *
 	 * @param option an integer that corresponds to the option that is
 	 *							 selected in the user interface
