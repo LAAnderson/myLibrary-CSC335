@@ -1,0 +1,52 @@
+Large Assignment 2:
+
+	We have 5 different classes in our project. This is, in part, because we decided to go with
+	the MVC organization. It's also because we decided to separate our book into two classes:
+	Book, and LibraryNode. This was mainly for encapsulation purposes.
+
+	Book:
+		
+		The Book class is a very basic immutable class. It has two instance variable strings:
+		title and author. It has two getters for those variables, and a toString method. This class
+		was mostly just a way to keep the relevant information about the book itself in one place.
+
+	LibraryNode:
+		
+		The LibraryNode class is a little more complex. Of course, each LibraryNode has a book object,
+		but they also have a rating and an isRead boolean. It also contains various getters and
+		setters as appropriate. However, the complexity of this class comes from its inner classes.
+		This class implements two comparators: compareByTitle and compareByAuthor. These two
+		comparators have an important use in the model for sorting books. Both of the inner classes
+		implement the Comparator interface. The reason for using these over a compareTo method is
+		because this allows us to use multiple different comparing methods, and allowed for the
+		functionality of sorting by the title or by the author.
+
+	MyLibraryModel:
+
+		This was where a lot of the raw functionality happens. It takes care of things such as the
+		different searching methods that are being used and getting the books in a certain sorted
+		order. Getting a random book is another. Each method is documented so you can look and see
+		specifics about each method and what is takes in and returns. Pretty much every command that
+		is being called by the user can be traced back to here. In terms of data structures, it just
+		uses an ArrayList called 'library' to keep track of all the books that have been added and
+		their relevant information. The reason we chose to go with an ArrayList is because we built
+		the library to be functional with an arbitrary number of elements and we also want to be able
+		to use our comparators to sort the books. Because of these two main things, we decided an
+		ArrayList would best fit our needs.
+
+	MyLibraryController:
+
+		As the controller states in it's class comment: the controller mostly serves as a buffer that
+		helps the model communicate with the view. This is to help simplify the functionality as much
+		as possible before they are used in the view. There's not too much to mention on this class
+		as it is not that complex but one last thing is that it contains a single private instance of
+		the model, and takes care of the specifics that don't necessarily need to be crowding the view.
+
+	MyLibrary:
+
+		Lastly, the MyLibrary class functioned as our view in the MCV organization. This was just a lot
+		of prompting to the user and using the correct functionality in the controller that corresponds
+		with the user's input. This allowed the user to use commands that would let them do different
+		things with their library. These commands are things like rate their books, mark their books as
+		read, add a book to their library, read in a list of books from an external file and store them
+		in their library, get a list of all the books sorted in one of many various ways. 
