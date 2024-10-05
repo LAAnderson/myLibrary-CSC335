@@ -62,14 +62,14 @@ public class LibraryNode {
 	/**
 	 * private Comparator classes to allow collections of LibraryNodes to be sorted
 	 */
-	static class compareByAuthor implements Comparator<LibraryNode> {
+	public static class compareByAuthor implements Comparator<LibraryNode> {
 		@Override
 		public int compare(LibraryNode l1, LibraryNode l2) {
 			return l1.getBook().getAuthor().compareTo(l2.getBook().getAuthor());
 		}
 	}
 
-	static class compareByTitle implements Comparator<LibraryNode> {
+	public static class compareByTitle implements Comparator<LibraryNode> {
 		@Override
 		public int compare(LibraryNode l1, LibraryNode l2) {
 			return l1.getBook().getTitle().compareTo(l2.getBook().getTitle());
