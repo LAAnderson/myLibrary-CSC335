@@ -18,10 +18,17 @@ public class MyLibrary {
 		System.out.println("Enter a command: ");
 		String userInput = s.nextLine().toLowerCase();
 
-		
-		
+		/*
+		* Main loop for the user interface that prompts for user input and
+		* awaits certain commands. Terminates when 'exit' command is entered.
+		*/
 		while (!userInput.equals("exit")) {
 
+			/*
+			* The search command prompts the user to enter an integer ranging
+			* from 1 to 3 that represents a what method they want to search with.
+			* Then, if the book is found, it displays the books information.
+			*/
 			if (userInput.equals("search")) { 
 				while (!userInput.equals("exit")) {
 					System.out.println(
@@ -49,7 +56,15 @@ public class MyLibrary {
 					printBookList(found);
 					break;
 				}
-			} else if (userInput.equals("addbook")) { 
+			}
+
+			/*
+			* The addbook command prompts the user for the appropriate information
+			* about the book that they are trying to add. It then uses the
+			* controller's addBook method to add the a book with that information
+			* to the library.
+			*/
+			else if (userInput.equals("addbook")) { 
 				System.out.print("title: ");
 				String t = s.nextLine().toLowerCase();
 				System.out.print("author: ");
@@ -58,13 +73,30 @@ public class MyLibrary {
 				controller.addBook(t, a);
 				System.out.println("\u001B[32m" + "Successfully added '" + t + "', by '" + a + "'" + "\u001B[0m");
 
-			} else if (userInput.equals("settoread")) { 
+			}
+
+			/*
+			* The settoread command prompts the user for the title of the book that
+			* they want to set to read. It then uses the controller's setToRead 
+			* method, and prints a confirmation message to the user.
+			*/
+			else if (userInput.equals("settoread")) { 
 				System.out.println("Enter the book title: ");
 				String title = s.nextLine().toLowerCase();
 				controller.setToRead(title);
 				System.out.println("\u001B[32m" + "Successfully set '" + title + "' to read." + "\u001B[0m");
 
-			} else if (userInput.equals("rate")) { 
+			}
+
+			/*
+			* The rate command is used to change the rating of a book. It prompts
+			* the user to input the title of the book to rate and the rating, then
+			* it uses the controller's rate method to change the rating of the book
+			* to the new rating that the user gave. Then it prints a message, either
+			* confirming that the book's rating was changed, or informing the user
+			* that the book is not in their library.
+			*/
+			else if (userInput.equals("rate")) { 
 				System.out.print("title: ");
 				String t = s.nextLine().toLowerCase();
 				System.out.print("rating [1 - 5]: ");
@@ -77,7 +109,16 @@ public class MyLibrary {
 					System.out.println("\u001B[31m" + "Book not in library." + "\u001B[0m");
 				}
 
-			} else if (userInput.equals("getbooks")) { 
+			}
+
+			/*
+			* The getbooks command prompts the user to enter an integer that represents
+			* which set of books to retrieve, and/or what sorting method to use. It will
+			* then user the controller's getBooks method to retrieve a list of books
+			* that correctly match the user's specification, and it will print them all
+			* to the console.
+			*/
+			else if (userInput.equals("getbooks")) { 
 				while (!userInput.equals("exit")) {
 					System.out.println(
 							"Enter the number representing which set of books to retrieve [1 .. 4]\n1 - all books sorted by title\n2 - all books sorted by author\n3 - books that have been read\n4 - books that have not been read");
@@ -97,11 +138,30 @@ public class MyLibrary {
 					printBookList(bookList);
 					break;
 				}
-			} else if (userInput.equals("suggestread")) { 
+			}
+
+			/*
+			* The suggestread command is a fun and useful command for the user to
+			* get a random book in their library that they haven't read suggested
+			* to them. It doesn't prompt for any input, instead it uses the
+			* controller's suggestRead method to get a random book chosen from the
+			* list of their unread books, and prints that book's information to
+			* the user.
+			*/
+			else if (userInput.equals("suggestread")) { 
 				LibraryNode suggestion = controller.suggestRead();
 				System.out.println(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
 
-			} else if (userInput.equals("addbooks")) { 
+			}
+
+			/*
+			* The addbooks method prompts the user for a filename (this should be
+			* a file with a list of books that the user wants to add) and uses
+			* the controller's addBooks method to add those books to the library.
+			* It then prints a message to the user, confirming that the books
+			* have been added.
+			*/
+			else if (userInput.equals("addbooks")) { 
 				try {
 					System.out.println("Enter the filename:");
 					String filename = s.nextLine();
@@ -110,7 +170,14 @@ public class MyLibrary {
 				} catch (FileNotFoundException e) {
 					System.out.println("\u001B[31m" + "File not found!" + "\u001B[0m");
 				}
-			} else if (userInput.equals("help")) { 
+			}
+
+			/*
+			* The help command is exactly what it sounds like. It doesn't prompt
+			* for any input, or use any functionality from the controller. It just
+			* prints information to the user about each command and its usages.
+			*/
+			else if (userInput.equals("help")) { 
 				System.out.println("search: \tsearch for a book by title (0), author (1), or rating(2)\n"
 						+ "addBook:\tadd a book to your library\n" + "setToRead:\tset a book in your library to read\n"
 						+ "rate:\t\trate a book in your library\n"
@@ -118,7 +185,10 @@ public class MyLibrary {
 						+ "suggestRead:\tsuggest and unread book\n"
 						+ "addBooks:\tadd multiple books from a file formatted as (title;author)\n"
 						+ "exit:\t\tterminate library");
-			} else {
+			}
+
+			// Message that informs the user that their input it not a valid command
+			else {
 				System.out.println("\u001B[31m" + "Invalid Command. Try 'help'" + "\u001B[0m");
 			}
 
@@ -129,6 +199,12 @@ public class MyLibrary {
 		s.close();
 	}
 
+	/**
+	* @param bookList ArrayList containing all the books to print
+	*
+	* @post prints all the books inside of bookList using their
+	*				toString methods.
+	*/
 	private static void printBookList(ArrayList<LibraryNode> bookList) {
 		for (LibraryNode node : bookList) {
 			System.out.println(node);
