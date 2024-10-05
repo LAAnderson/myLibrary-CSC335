@@ -71,10 +71,17 @@ public class MyLibrary {
 				String r = s.nextLine();
 
 				try {
-					controller.rate(t, Integer.parseInt(r));
-					System.out.println("\u001B[32m" + "Rating added successfully" + "\u001B[0m");
+					if (Integer.parseInt(r) >= 1 && Integer.parseInt(r) <= 5) {
+						controller.rate(t, Integer.parseInt(r));
+						System.out.println("\u001B[32m" + "Rating added successfully" + "\u001B[0m");
+					} else {
+						System.out.println("\u001B[31m" + "Improper rating value." + "\u001B[0m");
+					}
+					
 				} catch (ArrayIndexOutOfBoundsException e) {
 					System.out.println("\u001B[31m" + "Book not in library." + "\u001B[0m");
+				} catch (NumberFormatException e) {
+					System.out.println("\u001B[31m" + "Improper rating value." + "\u001B[0m");
 				}
 
 			} else if (userInput.equals("getbooks")) { 
@@ -98,9 +105,12 @@ public class MyLibrary {
 					break;
 				}
 			} else if (userInput.equals("suggestread")) { 
-				LibraryNode suggestion = controller.suggestRead();
-				System.out.println(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
-
+				try {
+					LibraryNode suggestion = controller.suggestRead();
+					System.out.println(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
+				} catch (ArithmeticException e) {
+					System.out.println("\u001B[31m" + "Add books to your library first!" + "\u001B[0m");
+				}
 			} else if (userInput.equals("addbooks")) { 
 				try {
 					System.out.println("Enter the filename:");
