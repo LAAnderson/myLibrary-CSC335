@@ -1,7 +1,7 @@
 /**
  * @authors Carson Heyman (username: cheyman), Logan Anderson (username: logananderson)
  * 
- *          Model for the library. Contains various searching and sorting
+ *          Model for the LIBRARY. Contains various searching and sorting
  *          methods.
  */
 import java.util.ArrayList;
@@ -14,29 +14,27 @@ import java.io.FileNotFoundException;
 /*
  * Encapsulation is maintained by only allowing primitive or immutable types
  * to escape. We only accept ints or Strings as parameters. When we return a
- * sorted list of the library we make sure to clone. Other than that all the
- * other ArrayLists being returned are not the library instance variable, 
- * but are instead constructed by iterating through library's elements.
+ * sorted list of the LIBRARY we make sure to clone. Other than that all the
+ * other ArrayLists being returned are not the LIBRARY instance variable, 
+ * but are instead constructed by iterating through LIBRARY's elements.
  */
 public class MyLibraryModel {
 
-	private ArrayList<LibraryNode> library;
+	private final ArrayList<LibraryNode> LIBRARY = new ArrayList<LibraryNode>();
 
-	MyLibraryModel() {
-		library = new ArrayList<LibraryNode>();
-	}
+	public MyLibraryModel() {}
 	
 	/**
-	 * @param	rating target rating to check for when searching books
+	 * @param	rating - target rating to check for when searching books
 	 *
 	 * @return an ArrayList that contains all the LibraryNodes that match the
 	 *				 target rating
 	 */
 	public ArrayList<LibraryNode> findByRating(int rating) {
 		ArrayList<LibraryNode> found = new ArrayList<>();
-		for (LibraryNode node : library) {
+		for (LibraryNode node : LIBRARY) {
 			if (node.getRating() == rating) {
-				found.add(node);
+				found.add(new LibraryNode(node));
 			}
 		}
 		return found;
@@ -50,9 +48,9 @@ public class MyLibraryModel {
 	 */
 	public ArrayList<LibraryNode> findByTitle(String title) {
 		ArrayList<LibraryNode> found = new ArrayList<>();
-		for (LibraryNode node : library) {
+		for (LibraryNode node : LIBRARY) {
 			if (node.getBook().getTitle().equals(title)) {
-				found.add(node);
+				found.add(new LibraryNode(node));
 			}
 		}
 		return found;
@@ -66,9 +64,9 @@ public class MyLibraryModel {
 	 */
 	public ArrayList<LibraryNode> findByAuthor(String author) {
 		ArrayList<LibraryNode> found = new ArrayList<>();
-		for (LibraryNode node : library) {
+		for (LibraryNode node : LIBRARY) {
 			if (node.getBook().getAuthor().equals(author)) {
-				found.add(node);
+				found.add(new LibraryNode(node));
 			}
 		}
 		return found;
@@ -78,11 +76,10 @@ public class MyLibraryModel {
 	 * @param title the desired title for the new book
 	 * @param author the desired author for the new book
 	 *
-	 * @post contructs a new LibraryNode and adds it to the library ArrayList
+	 * @post constructs a new LibraryNode and adds it to the LIBRARY ArrayList
 	 */
 	public void addNode(String title, String author) {
-		LibraryNode newBook = new LibraryNode(title, author);
-		library.add(newBook);
+		LIBRARY.add(new LibraryNode(title, author));
 	}
 
 	/**
@@ -129,10 +126,18 @@ public class MyLibraryModel {
 	public ArrayList<LibraryNode> getBooks(int option) {
 		ArrayList<LibraryNode> sorted;
 		if (option == 1) {
-			sorted = (ArrayList<LibraryNode>) library.clone();
+			sorted = new ArrayList<LibraryNode>();
+			
+			for(LibraryNode node : LIBRARY)
+				sorted.add(new LibraryNode(node));
+			
 			Collections.sort(sorted, new LibraryNode.compareByTitle());
 		} else if (option == 2) {
-			sorted = (ArrayList<LibraryNode>) library.clone();
+			sorted = new ArrayList<LibraryNode>();
+			
+			for (LibraryNode node : LIBRARY)
+				sorted.add(new LibraryNode(node));
+			
 			Collections.sort(sorted, new LibraryNode.compareByAuthor());
 		} else if (option == 3) {
 			sorted = getReadBooks();
@@ -147,13 +152,13 @@ public class MyLibraryModel {
 	/**
 	 * A private helper method for the getBooks method
 	 *
-	 * @return an ArrayList containing all the read books in the library
+	 * @return an ArrayList containing all the read books in the LIBRARY
 	 */
 	private ArrayList<LibraryNode> getReadBooks() {
 		ArrayList<LibraryNode> found = new ArrayList<>();
-		for (LibraryNode node : library) {
+		for (LibraryNode node : LIBRARY) {
 			if (node.getIsRead()) {
-				found.add(node);
+				found.add(new LibraryNode(node));
 			}
 		}
 		return found;
@@ -162,13 +167,13 @@ public class MyLibraryModel {
 	/**
 	 * A private helper method for the getBooks method
 	 *
-	 * @return an ArrayList containing all the unread books in the library
+	 * @return an ArrayList containing all the unread books in the LIBRARY
 	 */
 	private ArrayList<LibraryNode> getUnreadBooks() {
 		ArrayList<LibraryNode> found = new ArrayList<>();
-		for (LibraryNode node : library) {
+		for (LibraryNode node : LIBRARY) {
 			if (!node.getIsRead()) {
-				found.add(node);
+				found.add(new LibraryNode(node));
 			}
 		}
 		return found;
@@ -176,7 +181,7 @@ public class MyLibraryModel {
 
 	/**
 	 * @return a LibraryNode that was randomly selected from the list of
-	 *				 unread books in the library
+	 *				 unread books in the LIBRARY
 	 */
 	public LibraryNode suggestRead() {
 		Random rand = new Random();
@@ -187,11 +192,11 @@ public class MyLibraryModel {
 
 	/**
 	 * @param name of the file containing the books to be added creates and adds
-	 *             LibraryNodes from the input file to the library
+	 *             LibraryNodes from the input file to the LIBRARY
 	 *
 	 * @post Reads in a file and composes it's lines into two ArrayLists: one for
 	 *			 the titles and one for the authors. It then adds each seperate book
-	 *			 with its appropriate information to the library
+	 *			 with its appropriate information to the LIBRARY
 	 */
 	public void addBooks(String fileName) throws FileNotFoundException{
 		Scanner s = new Scanner(new File(fileName));

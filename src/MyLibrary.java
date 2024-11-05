@@ -46,7 +46,11 @@ public class MyLibrary {
 					String search = userInput;
 					int optionInt = Integer.parseInt(option);
 					ArrayList<LibraryNode> found = controller.search(optionInt, search);
-					printBookList(found);
+					if (found.size() == 0) {
+						System.out.println("\u001B[31m" + "Book not found!" + "\u001B[0m");
+					} else {
+						printBookList(found);
+					}
 					break;
 				}
 			} else if (userInput.equals("addbook")) { 

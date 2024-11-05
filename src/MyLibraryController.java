@@ -1,25 +1,25 @@
 /**
  * @author Logan Anderson (username: logananderson), Carson Heyman (username: cheyman)
  * 
- * Coordinates between the model and view of the library
+ * Coordinates between the MODEL and view of the library
  */
 
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
 /**
- * The controller ensures encapsulation in many of the same ways the model does.
- * Because this class acts as a buffer between the view and model, it serves mostly to
- * make sure the correct methods in the model are called furthermore, the model doesn't 
- * allow outside classes to act on the model, further ensuring encapsulation.
+ * The controller ensures encapsulation in many of the same ways the MODEL does.
+ * Because this class acts as a buffer between the view and MODEL, it serves mostly to
+ * make sure the correct methods in the MODEL are called furthermore, the MODEL doesn't 
+ * allow outside classes to act on the MODEL, further ensuring encapsulation.
  */
 
 public class MyLibraryController {
 	public MyLibraryController(MyLibraryModel model) {
-		this.model = model;
+		this.MODEL = model;
 	}
 
-	private final MyLibraryModel model;
+	private final MyLibraryModel MODEL;
 
 	/**
 	 * @pre option is within [1 .. 3] option 1 searches by title option 2 searches
@@ -29,26 +29,26 @@ public class MyLibraryController {
 	public ArrayList<LibraryNode> search(int option, String search) {
 		switch (option) {
 		case 1:
-			return model.findByTitle(search);
+			return MODEL.findByTitle(search);
 		case 2:
-			return model.findByAuthor(search);
+			return MODEL.findByAuthor(search);
 		default:
-			return model.findByRating(Integer.parseInt(search));
+			return MODEL.findByRating(Integer.parseInt(search));
 		}
 	}
 
 	/**
-	 * @post adds a single book to the model's library
+	 * @post adds a single book to the MODEL's library
 	 */
 	public void addBook(String title, String author) {
-		model.addNode(title, author);
+		MODEL.addNode(title, author);
 	}
 
 	/**
 	 * @post sets LibraryNode with book of the given title's isRead to true
 	 */
 	public void setToRead(String title) {
-		model.setToRead(title);
+		MODEL.setToRead(title);
 	}
 
 	/**
@@ -56,33 +56,33 @@ public class MyLibraryController {
 	 * @post sets LibraryNode with book of the given title's rating to the given rating
 	 */
 	public void rate(String title, int rating) {
-		model.rate(title, rating);
+		MODEL.rate(title, rating);
 	}
 
 	/**
 	 * @pre option may only be [1 .. 4]
 	 * 
-	 * @param option 1-model's library sorted by title 2-model's library sorted by
-	 *               author 3-model's library's read nodes sorted by title 4-model's
+	 * @param option 1-MODEL's library sorted by title 2-MODEL's library sorted by
+	 *               author 3-MODEL's library's read nodes sorted by title 4-MODEL's
 	 *               library's unread nodes sorted by title
 	 * 
 	 * @return an arrayList of the LibraryNodes sorted accordingly
 	 */
 	public ArrayList<LibraryNode> getBooks(int option) {
-		return model.getBooks(option);
+		return MODEL.getBooks(option);
 	}
 
 	/**
-	 * @return a randomly selected unread node of model's library
+	 * @return a randomly selected unread node of MODEL's library
 	 */
 	public LibraryNode suggestRead() {
-		return model.suggestRead();
+		return MODEL.suggestRead();
 	}
 
 	/**
-	 * @post adds LibraryNodes to model's library read in from fileName
+	 * @post adds LibraryNodes to MODEL's library read in from fileName
 	 */
 	public void addBooks(String fileName) throws FileNotFoundException {
-		model.addBooks(fileName);
+		MODEL.addBooks(fileName);
 	}
 }

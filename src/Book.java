@@ -11,29 +11,29 @@
  */
 public final class Book {
 	public Book(String t, String a) {
-		title = t;
-		author = a;
+		TITLE = t;
+		AUTHOR = a;
 	}
 
-	private String title;
-	private String author;
+	private final String TITLE;
+	private final String AUTHOR;
 
 	/**
 	 * @return a string containing the title of the book
 	 */
 	public String getTitle() {
-		return this.title;
+		return this.TITLE;
 	}
 
 	/**
 	 * @return a string containing the author of the book
 	 */
 	public String getAuthor() {
-		return this.author;
+		return this.AUTHOR;
 	}
 	
 	@Override
 	public String toString() {
-		return this.title + ", by " + this.author;
+		return this.TITLE + ", by " + this.AUTHOR;
 	}
 }

@@ -14,21 +14,28 @@ import java.util.Comparator;
  */
 
 public class LibraryNode {
+	private final Book BOOK;
+	private int rating;
+	private boolean isRead;
+	
 	public LibraryNode(String title, String author) {
-		this.book = new Book(title, author);
+		this.BOOK = new Book(title, author);
 		this.rating = 0;
 		this.isRead = false;
 	}
+	
+	public LibraryNode(LibraryNode node) {
+		this.BOOK = node.BOOK;
+		this.rating = node.rating;
+		this.isRead = node.isRead;
+	}
 
-	private Book book;
-	private int rating;
-	private boolean isRead;
 
 	/**
 	 * @return the book associated with the instance of this class
 	 */
 	public Book getBook() {
-		return this.book;
+		return this.BOOK;
 	}
 
 	/**
@@ -76,9 +83,12 @@ public class LibraryNode {
 		}
 	}
 
+	/**
+	 * @return a string representation of the LibraryNode instance
+	 */
 	@Override
 	public String toString() {
-		return this.book.toString() + (this.isRead ? ", Read" : ", Unread") + ", Rating: "
+		return this.BOOK.toString() + (this.isRead ? ", Read" : ", Unread") + ", Rating: "
 				+ (this.rating == 0 ? "unrated" : this.rating + "/5");
 	}
 }
