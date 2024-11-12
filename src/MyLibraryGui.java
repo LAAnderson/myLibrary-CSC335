@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 
 public class MyLibraryGui {
-	private JFrame helpFrame;
+
 	/**
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
@@ -28,12 +28,12 @@ public class MyLibraryGui {
 	
 	public MyLibraryGui() {
 		JFrame mainFrame = new JFrame();
+		JPanel outputPanel = new JPanel();
+	    JPanel inputPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
 		
-        JLabel outputLabel = new JLabel("output");
-
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		panel.setLayout(new GridLayout(2,0));
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		buttonPanel.setLayout(new GridLayout(2,0));
 		
 		/*
 		 *  opens new frame where user chooses search method and provides inputs
@@ -47,7 +47,7 @@ public class MyLibraryGui {
 				
 			}
 		});
-		panel.add(searchButton);
+		buttonPanel.add(searchButton);
 		
 		
 		/*
@@ -61,7 +61,7 @@ public class MyLibraryGui {
 				//Open add book window
 			}
 		});
-		panel.add(addBookButton);
+		buttonPanel.add(addBookButton);
 		
 		/*
 		 * opens new frame where user provides input
@@ -74,7 +74,7 @@ public class MyLibraryGui {
 				// open set to read window
 			}
 		});
-		panel.add(setToReadButton);
+		buttonPanel.add(setToReadButton);
 		
 		/*
 		 * opens new frame where user provides input
@@ -87,7 +87,7 @@ public class MyLibraryGui {
 				// open rate window
 			}
 		});
-		panel.add(rateButton);
+		buttonPanel.add(rateButton);
 		
 		/*
 		 * opens new frame where user provides input
@@ -101,7 +101,7 @@ public class MyLibraryGui {
 				// open getbooks window
 			}
 		});
-		panel.add(getBooksButton);
+		buttonPanel.add(getBooksButton);
 		
 		/*
 		 * opens new frame with output (no need for input)
@@ -113,7 +113,7 @@ public class MyLibraryGui {
 				// open suggest read window
 			}
 		});
-		panel.add(suggestReadButton);
+		buttonPanel.add(suggestReadButton);
 		
 		/*
 		 * opens new frame where user provides input
@@ -126,7 +126,7 @@ public class MyLibraryGui {
 				// open add books window
 			}
 		});
-		panel.add(addBooksButton);
+		buttonPanel.add(addBooksButton);
 		
 		/**
 		 * @see below is an example of how to implement the opening window. 
@@ -137,35 +137,25 @@ public class MyLibraryGui {
 		helpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// if (helpFrame == null || !helpFrame.isVisible()) {
-				// 	helpFrame = new JFrame("Help");
-				// 	JPanel helpPanel = new JPanel();
-				// 	helpPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				// 	helpPanel.setLayout(new CardLayout(10, 10));
-				// 	helpPanel.add(new JLabel("SUPER SWAG MODE!"));
-				// 	
-				// 	helpFrame.add(helpPanel, BorderLayout.CENTER);
-				// 	helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				// 	helpFrame.setTitle("My Library");
-				// 	helpFrame.pack();
-				// 	helpFrame.setVisible(true);
-				// }
-                outputLabel.setText("SUPER SWAG MODE!");
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+				
+				inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				inputPanel.add(new JLabel("Inputs here!"));
+				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				outputPanel.add(new JLabel("Outputs here!"));
+				
+				mainFrame.pack();
 			}
 		});
-		panel.add(helpButton);
-		
-        /*
-         * output label
-         */
-        JPanel outputPanel = new JPanel();
-        outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        outputPanel.add(outputLabel);
-
+		buttonPanel.add(helpButton);
+	
+       
 		/*
 		 * Standard closing functs
 		 */
-		mainFrame.add(panel, BorderLayout.CENTER);
+		mainFrame.add(buttonPanel, BorderLayout.NORTH);
+		mainFrame.add(inputPanel, BorderLayout.CENTER);
         mainFrame.add(outputPanel, BorderLayout.SOUTH);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setTitle("My Library");
