@@ -7,9 +7,11 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,7 +19,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import java.io.FileNotFoundException;
 
 
 
@@ -27,6 +34,10 @@ public class MyLibraryGui {
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
 	 */
+
+	private static String inputString;
+	private static boolean inputEnteredFlag;
+	private static MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
 	
 	public MyLibraryGui() {
 		JFrame mainFrame = new JFrame();
@@ -34,6 +45,7 @@ public class MyLibraryGui {
 	    JPanel inputPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		
+
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		buttonPanel.setLayout(new GridLayout(2,0));
 		
@@ -229,7 +241,22 @@ public class MyLibraryGui {
 		suggestReadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open suggest read window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+
+				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				JLabel output = new JLabel();
+
+				try {
+					LibraryNode suggestion = controller.suggestRead();
+					output.setText(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
+				} catch (ArithmeticException exception) {
+					output.setText("Add books to your library first!");
+					output.setForeground(Color.RED);
+				}
+
+				outputPanel.add(output);
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(suggestReadButton);
@@ -242,7 +269,47 @@ public class MyLibraryGui {
 		addBooksButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open add books window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+
+				inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+				JTextField inputField = new JTextField(20);
+				JLabel inputLabel = new JLabel();
+				JLabel outputLabel = new JLabel();
+				
+				// When the user clicks this button, the text will be saved.
+				JButton enterButton = new JButton("Enter");
+				enterButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent event) {
+						inputString = inputField.getText();
+						inputField.setText("");
+						inputEnteredFlag = true;
+						addBooksButton.doClick();
+					}
+				});
+
+				inputLabel.setText("Enter the filename:");
+
+				if (inputEnteredFlag) {
+					try {
+						controller.addBooks(inputString);
+						outputLabel.setText("Books added successfully");
+						outputLabel.setForeground(Color.GREEN);
+					} catch (FileNotFoundException ex) {
+						outputLabel.setText("File not found!");
+						outputLabel.setForeground(Color.RED);
+					}
+					inputEnteredFlag = false;
+				}
+
+				inputPanel.add(inputLabel);
+				inputPanel.add(inputField);
+				inputPanel.add(enterButton);
+				outputPanel.add(outputLabel);
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(addBooksButton);
@@ -259,11 +326,20 @@ public class MyLibraryGui {
 				inputPanel.removeAll();
 				outputPanel.removeAll();
 				
-				inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				inputPanel.add(new JLabel("Inputs here!"));
+				JTextArea textArea = new JTextArea(10, 70);
+
 				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				outputPanel.add(new JLabel("Outputs here!"));
+				textArea.append("Search: search for a book by title (0), author (1), or rating(2)\n");
+				textArea.append("Add Book: add a book to your library\n");
+				textArea.append("Set to Read: set a book in your library to read\n");
+				textArea.append("Rate: rate a book in your library\n");
+				textArea.append("Get Books: display a list of books sorted by title (0), author (1), read books (2), or unread books (3)\n");
+				textArea.append("Suggest Read: suggest an unread book\n");
+				textArea.append("Add Books: add multiple books from a file formatted as (title;author)\n");
+				textArea.setEditable(false);
 				
+				outputPanel.add(new JScrollPane(textArea));
+
 				mainFrame.pack();
 			}
 		});
