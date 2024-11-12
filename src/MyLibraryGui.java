@@ -7,6 +7,7 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
@@ -16,6 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import java.io.FileNotFoundException;
@@ -203,11 +207,20 @@ public class MyLibraryGui {
 				inputPanel.removeAll();
 				outputPanel.removeAll();
 				
-				inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				inputPanel.add(new JLabel("Inputs here!"));
+				JTextArea textArea = new JTextArea(10, 70);
+
 				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				outputPanel.add(new JLabel("Outputs here!"));
+				textArea.append("Search: search for a book by title (0), author (1), or rating(2)\n");
+				textArea.append("Add Book: add a book to your library\n");
+				textArea.append("Set to Read: set a book in your library to read\n");
+				textArea.append("Rate: rate a book in your library\n");
+				textArea.append("Get Books: display a list of books sorted by title (0), author (1), read books (2), or unread books (3)\n");
+				textArea.append("Suggest Read: suggest an unread book\n");
+				textArea.append("Add Books: add multiple books from a file formatted as (title;author)\n");
+				textArea.setEditable(false);
 				
+				outputPanel.add(new JScrollPane(textArea));
+
 				mainFrame.pack();
 			}
 		});
