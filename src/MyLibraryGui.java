@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.io.FileNotFoundException;
+
 
 
 public class MyLibraryGui {
@@ -26,6 +28,10 @@ public class MyLibraryGui {
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
 	 */
+
+	private static String inputString;
+	private static boolean inputEnteredFlag;
+	private static MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
 	
 	public MyLibraryGui() {
 		JFrame mainFrame = new JFrame();
@@ -115,9 +121,6 @@ public class MyLibraryGui {
 				inputPanel.removeAll();
 				outputPanel.removeAll();
 
-				// temporary solution, will update this to be an instance variable later.
-				MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
-
 				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 				JLabel output = new JLabel();
 
@@ -143,7 +146,47 @@ public class MyLibraryGui {
 		addBooksButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				inputPanel.removeAll();
+				outputPanel.removeAll();
 
+				inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+				JTextField inputField = new JTextField(20);
+				JLabel inputLabel = new JLabel();
+				JLabel outputLabel = new JLabel();
+				
+				// When the user clicks this button, the text will be saved.
+				JButton enterButton = new JButton("Enter");
+				enterButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent event) {
+						inputString = inputField.getText();
+						inputField.setText("");
+						inputEnteredFlag = true;
+						addBooksButton.doClick();
+					}
+				});
+
+				inputLabel.setText("Enter the filename:");
+
+				if (inputEnteredFlag) {
+					try {
+						controller.addBooks(inputString);
+						outputLabel.setText("Books added successfully");
+						outputLabel.setForeground(Color.GREEN);
+					} catch (FileNotFoundException ex) {
+						outputLabel.setText("File not found!");
+						outputLabel.setForeground(Color.RED);
+					}
+					inputEnteredFlag = false;
+				}
+
+				inputPanel.add(inputLabel);
+				inputPanel.add(inputField);
+				inputPanel.add(enterButton);
+				outputPanel.add(outputLabel);
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(addBooksButton);
