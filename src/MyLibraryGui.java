@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 
 public class MyLibraryGui {
-	
+	private JFrame helpFrame;
 	/**
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
@@ -135,17 +135,19 @@ public class MyLibraryGui {
 		helpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame helpFrame = new JFrame("Help");
-				JPanel helpPanel = new JPanel();
-				helpPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-				helpPanel.setLayout(new CardLayout(10, 10));
-				helpPanel.add(new JLabel("SUPER SWAG MODE!"));
-				
-				helpFrame.add(helpPanel, BorderLayout.CENTER);
-				helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				helpFrame.setTitle("My Library");
-				helpFrame.pack();
-				helpFrame.setVisible(true);
+				if (helpFrame == null || !helpFrame.isVisible()) {
+					helpFrame = new JFrame("Help");
+					JPanel helpPanel = new JPanel();
+					helpPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+					helpPanel.setLayout(new CardLayout(10, 10));
+					helpPanel.add(new JLabel("SUPER SWAG MODE!"));
+					
+					helpFrame.add(helpPanel, BorderLayout.CENTER);
+					helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					helpFrame.setTitle("My Library");
+					helpFrame.pack();
+					helpFrame.setVisible(true);
+				}
 			}
 		});
 		panel.add(helpButton);
