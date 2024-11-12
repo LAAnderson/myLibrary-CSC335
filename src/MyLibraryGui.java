@@ -29,6 +29,8 @@ public class MyLibraryGui {
 	public MyLibraryGui() {
 		JFrame mainFrame = new JFrame();
 		
+        JLabel outputLabel = new JLabel("output");
+
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		panel.setLayout(new GridLayout(2,0));
@@ -135,27 +137,36 @@ public class MyLibraryGui {
 		helpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (helpFrame == null || !helpFrame.isVisible()) {
-					helpFrame = new JFrame("Help");
-					JPanel helpPanel = new JPanel();
-					helpPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-					helpPanel.setLayout(new CardLayout(10, 10));
-					helpPanel.add(new JLabel("SUPER SWAG MODE!"));
-					
-					helpFrame.add(helpPanel, BorderLayout.CENTER);
-					helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					helpFrame.setTitle("My Library");
-					helpFrame.pack();
-					helpFrame.setVisible(true);
-				}
+				// if (helpFrame == null || !helpFrame.isVisible()) {
+				// 	helpFrame = new JFrame("Help");
+				// 	JPanel helpPanel = new JPanel();
+				// 	helpPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				// 	helpPanel.setLayout(new CardLayout(10, 10));
+				// 	helpPanel.add(new JLabel("SUPER SWAG MODE!"));
+				// 	
+				// 	helpFrame.add(helpPanel, BorderLayout.CENTER);
+				// 	helpFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				// 	helpFrame.setTitle("My Library");
+				// 	helpFrame.pack();
+				// 	helpFrame.setVisible(true);
+				// }
+                outputLabel.setText("SUPER SWAG MODE!");
 			}
 		});
 		panel.add(helpButton);
 		
+        /*
+         * output label
+         */
+        JPanel outputPanel = new JPanel();
+        outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        outputPanel.add(outputLabel);
+
 		/*
 		 * Standard closing functs
 		 */
 		mainFrame.add(panel, BorderLayout.CENTER);
+        mainFrame.add(outputPanel, BorderLayout.SOUTH);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setTitle("My Library");
 		mainFrame.pack();
