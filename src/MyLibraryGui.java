@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -32,6 +33,7 @@ public class MyLibraryGui {
 	    JPanel inputPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		
+
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		buttonPanel.setLayout(new GridLayout(2,0));
 		
@@ -110,7 +112,25 @@ public class MyLibraryGui {
 		suggestReadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open suggest read window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+
+                // temporary solution, will update this to be an instance variable later.
+                MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
+
+				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                JLabel output = new JLabel();
+
+				try {
+					LibraryNode suggestion = controller.suggestRead();
+                    output.setText(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
+				} catch (ArithmeticException exception) {
+                    output.setText("Add books to your library first!");
+                    output.setForeground(Color.RED);
+				}
+
+                outputPanel.add(output);
+                mainFrame.pack();
 			}
 		});
 		buttonPanel.add(suggestReadButton);
@@ -123,7 +143,7 @@ public class MyLibraryGui {
 		addBooksButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open add books window
+
 			}
 		});
 		buttonPanel.add(addBooksButton);
