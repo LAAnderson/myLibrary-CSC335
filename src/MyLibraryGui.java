@@ -115,22 +115,22 @@ public class MyLibraryGui {
 				inputPanel.removeAll();
 				outputPanel.removeAll();
 
-                // temporary solution, will update this to be an instance variable later.
-                MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
+				// temporary solution, will update this to be an instance variable later.
+				MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
 
 				outputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                JLabel output = new JLabel();
+				JLabel output = new JLabel();
 
 				try {
 					LibraryNode suggestion = controller.suggestRead();
-                    output.setText(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
+					output.setText(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
 				} catch (ArithmeticException exception) {
-                    output.setText("Add books to your library first!");
-                    output.setForeground(Color.RED);
+					output.setText("Add books to your library first!");
+					output.setForeground(Color.RED);
 				}
 
-                outputPanel.add(output);
-                mainFrame.pack();
+				outputPanel.add(output);
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(suggestReadButton);
