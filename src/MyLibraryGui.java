@@ -34,10 +34,8 @@ public class MyLibraryGui {
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
 	 * @see https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
 	 */
-
-	private static String inputString;
-	private static boolean inputEnteredFlag;
 	
+
 	public MyLibraryGui() {
 		JFrame mainFrame = new JFrame();
 		JPanel outputPanel = new JPanel();
@@ -414,26 +412,18 @@ public class MyLibraryGui {
 				enterButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
-						inputString = inputField.getText();
-						inputField.setText("");
-						inputEnteredFlag = true;
-						addBooksButton.doClick();
+						try {
+							CONTROLLER.addBooks(inputField.getText());
+							outputLabel.setText("Books added successfully");
+							outputLabel.setForeground(Color.GREEN);
+						} catch (FileNotFoundException ex) {
+							outputLabel.setText("File not found!");
+							outputLabel.setForeground(Color.RED);
+						}
 					}
 				});
 
 				inputLabel.setText("Enter the filename:");
-
-				if (inputEnteredFlag) {
-					try {
-						CONTROLLER.addBooks(inputString);
-						outputLabel.setText("Books added successfully");
-						outputLabel.setForeground(Color.GREEN);
-					} catch (FileNotFoundException ex) {
-						outputLabel.setText("File not found!");
-						outputLabel.setForeground(Color.RED);
-					}
-					inputEnteredFlag = false;
-				}
 
 				inputPanel.add(inputLabel);
 				inputPanel.add(inputField);
