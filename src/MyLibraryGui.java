@@ -73,8 +73,8 @@ public class MyLibraryGui {
 				JTextField titleToSearch = new JTextField(50);
 				titlePanel.add(titleToSearch, BorderLayout.SOUTH);
 				
-				JButton titleSearch = new JButton("Search By Title");
-				titleSearch.addActionListener(new ActionListener() {
+				JButton doTitleSearch = new JButton("Search By Title");
+				doTitleSearch.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						outputPanel.removeAll();
@@ -94,7 +94,7 @@ public class MyLibraryGui {
 					}
 					
 				});
-				titlePanel.add(titleSearch, BorderLayout.NORTH);
+				titlePanel.add(doTitleSearch, BorderLayout.NORTH);
 				
 				
 				JPanel authorPanel = new JPanel();
@@ -102,8 +102,8 @@ public class MyLibraryGui {
 				JTextField authorToSearch = new JTextField(50);
 				authorPanel.add(authorToSearch, BorderLayout.SOUTH);
 				
-				JButton authorSearch = new JButton("Search By Author");
-				authorSearch.addActionListener(new ActionListener() {
+				JButton doAuthorSearch = new JButton("Search By Author");
+				doAuthorSearch.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						outputPanel.removeAll();
@@ -122,7 +122,7 @@ public class MyLibraryGui {
 						mainFrame.pack();
 					}
 				});
-				authorPanel.add(authorSearch, BorderLayout.NORTH);
+				authorPanel.add(doAuthorSearch, BorderLayout.NORTH);
 				
 				
 				JPanel ratingPanel = new JPanel();
@@ -130,8 +130,8 @@ public class MyLibraryGui {
 				JTextField ratingToSearch = new JTextField(50);
 				ratingPanel.add(ratingToSearch, BorderLayout.SOUTH);
 				
-				JButton ratingSearch = new JButton("Search By Rating");
-				ratingSearch.addActionListener(new ActionListener() {
+				JButton doRatingSearch = new JButton("Search By Rating");
+				doRatingSearch.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e ) {
 						outputPanel.removeAll();
@@ -152,7 +152,7 @@ public class MyLibraryGui {
 						mainFrame.pack();
 					}
 				});
-				ratingPanel.add(ratingSearch, BorderLayout.NORTH);
+				ratingPanel.add(doRatingSearch, BorderLayout.NORTH);
 				
 				
 				
@@ -189,7 +189,29 @@ public class MyLibraryGui {
 		addBookButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Open add book window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+				
+				JTextField titleInput = new JTextField(20);
+				JTextField authorInput = new JTextField(20);
+				JLabel title = new JLabel("Title:");
+				JLabel author = new JLabel("Author:");
+				JButton doAddBook = new JButton("Add Book");
+				
+				inputPanel.add(title, BorderLayout.NORTH);
+				inputPanel.add(titleInput, BorderLayout.NORTH);
+				inputPanel.add(author, BorderLayout.CENTER);
+				inputPanel.add(authorInput, BorderLayout.CENTER);
+				inputPanel.add(doAddBook, BorderLayout.SOUTH);
+				
+				doAddBook.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// add book implementation !
+					}
+				});
+				
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(addBookButton);
