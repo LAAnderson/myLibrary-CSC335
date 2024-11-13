@@ -55,6 +55,7 @@ public class MyLibraryModel {
 		}
 		return found;
 	}
+	
 
 	/**
 	 * @param author target author to check for when searching books
@@ -83,16 +84,29 @@ public class MyLibraryModel {
 	}
 
 	/**
+	 * @param title - target title to search for
+	 * @return  an arrayList containing the model's own 
+	 * 			libraryNodes that match the target title
+	 */
+	private ArrayList<LibraryNode> helperFindByTitle(String title) {
+		ArrayList<LibraryNode> found = new ArrayList<>();
+		for (LibraryNode node : LIBRARY) {
+			if (node.getBook().getTitle().equals(title)) {
+				found.add(node);
+			}
+		}
+		return found;
+	}
+	
+	/**
 	 * @param title the title of the target book that is being set to read
 	 *
 	 * @post sets the book that matches the title to read
 	 */
 	public void setToRead(String title) {
-		ArrayList<LibraryNode> books = findByTitle(title);
-		if (books.size() >= 1) {
-			LibraryNode node = books.get(0);
+		ArrayList<LibraryNode> books = helperFindByTitle(title);
+		for (LibraryNode node : books)
 			node.read();
-		}
 	}
 
 	/**
@@ -105,7 +119,7 @@ public class MyLibraryModel {
 	 *			 it rates it the desired rating
 	 */
 	public void rate(String title, int rating) {
-		ArrayList<LibraryNode> books = findByTitle(title);
+		ArrayList<LibraryNode> books = helperFindByTitle(title);
 		if (books.size() >= 1) {
 			LibraryNode node = books.get(0);
 			node.setRating(rating);

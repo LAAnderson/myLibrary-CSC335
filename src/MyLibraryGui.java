@@ -37,14 +37,12 @@ public class MyLibraryGui {
 
 	private static String inputString;
 	private static boolean inputEnteredFlag;
-	private static MyLibraryController controller = new MyLibraryController(new MyLibraryModel());
 	
 	public MyLibraryGui() {
 		JFrame mainFrame = new JFrame();
 		JPanel outputPanel = new JPanel();
 	    JPanel inputPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
-		
 
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		buttonPanel.setLayout(new GridLayout(2,0));
@@ -70,7 +68,7 @@ public class MyLibraryGui {
 				
 				JPanel titlePanel = new JPanel();
 				titlePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-				JTextField titleToSearch = new JTextField(50);
+				JTextField titleToSearch = new JTextField(25);
 				titlePanel.add(titleToSearch, BorderLayout.SOUTH);
 				
 				JButton doTitleSearch = new JButton("Search By Title");
@@ -78,12 +76,14 @@ public class MyLibraryGui {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						outputPanel.removeAll();
+						mainFrame.pack();
 						JLabel titleSearchOut = new JLabel();
 						
 						ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(1, titleToSearch.getText().toLowerCase());
 							
 						if (matchingNodes.size() == 0) {
 							titleSearchOut.setText("Book not found or input not provided.");
+							titleSearchOut.setForeground(Color.RED);
 						} else {
 							titleSearchOut.setText(matchingNodes.toString());
 						}
@@ -99,7 +99,7 @@ public class MyLibraryGui {
 				
 				JPanel authorPanel = new JPanel();
 				authorPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-				JTextField authorToSearch = new JTextField(50);
+				JTextField authorToSearch = new JTextField(25);
 				authorPanel.add(authorToSearch, BorderLayout.SOUTH);
 				
 				JButton doAuthorSearch = new JButton("Search By Author");
@@ -107,12 +107,14 @@ public class MyLibraryGui {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						outputPanel.removeAll();
+						mainFrame.pack();
 						JLabel authorSearchOut = new JLabel();
 						
-						ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(2, authorToSearch.getText());
+						ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(2, authorToSearch.getText().toLowerCase());
 						
 						if (matchingNodes.size() == 0) {
 							authorSearchOut.setText("Book not found or input not provided.");
+							authorSearchOut.setForeground(Color.RED);
 						} else {
 							authorSearchOut.setText(matchingNodes.toString());
 						}
@@ -127,7 +129,7 @@ public class MyLibraryGui {
 				
 				JPanel ratingPanel = new JPanel();
 				ratingPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-				JTextField ratingToSearch = new JTextField(50);
+				JTextField ratingToSearch = new JTextField(25);
 				ratingPanel.add(ratingToSearch, BorderLayout.SOUTH);
 				
 				JButton doRatingSearch = new JButton("Search By Rating");
@@ -135,17 +137,20 @@ public class MyLibraryGui {
 					@Override
 					public void actionPerformed(ActionEvent e ) {
 						outputPanel.removeAll();
+						mainFrame.pack();;
 						JLabel ratingSearchOut = new JLabel();
 						try {
-							ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(3, ratingToSearch.getText());
+							ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(3, ratingToSearch.getText().toLowerCase());
 							
 							if (matchingNodes.size() == 0) {
-								ratingSearchOut.setText("Book not found or input not provided.");
+								ratingSearchOut.setText("Book not found.");
+								ratingSearchOut.setForeground(Color.RED);
 							} else {
 								ratingSearchOut.setText(matchingNodes.toString());
 							}
 						} catch (Exception NumberFormatException) {
 							ratingSearchOut.setText("Please provide numeric [1..5] input");
+							ratingSearchOut.setForeground(Color.RED);
 						}
 						
 						outputPanel.add(ratingSearchOut);
@@ -182,8 +187,10 @@ public class MyLibraryGui {
 		
 		
 		/*
-		 * opens new frame where user provides author and title
-		 * hides input fields upon submission and provides output
+		 * by pressing on the addBook button, two input text fields and a button are
+		 * added to the inputPanel. when no input is detected in either field, the
+		 * output panel is populated with a warning. when both fields are populated,
+		 * the input fields are cleared and the book is added
 		 */
 		JButton addBookButton = new JButton("Add Book");
 		addBookButton.addActionListener(new ActionListener() {
@@ -192,8 +199,8 @@ public class MyLibraryGui {
 				inputPanel.removeAll();
 				outputPanel.removeAll();
 				
-				JTextField titleInput = new JTextField(20);
-				JTextField authorInput = new JTextField(20);
+				JTextField titleInput = new JTextField(18);
+				JTextField authorInput = new JTextField(18);
 				JLabel title = new JLabel("Title:");
 				JLabel author = new JLabel("Author:");
 				JButton doAddBook = new JButton("Add Book");
@@ -207,7 +214,27 @@ public class MyLibraryGui {
 				doAddBook.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// add book implementation !
+						outputPanel.removeAll();
+						mainFrame.pack();
+						
+						String titleIn = titleInput.getText().toLowerCase();
+						String authorIn = authorInput.getText().toLowerCase();
+						JLabel outputLabel = new JLabel();
+						
+						if (!titleIn.equals("") && !authorIn.equals("")) { // if there are no empty inputs
+							CONTROLLER.addBook(titleIn, authorIn);
+							outputLabel.setText(titleIn + ", by " + authorIn + " added successfully.");
+							outputLabel.setForeground(Color.GREEN);
+							titleInput.setText("");
+							authorInput.setText("");
+						} else {
+							outputLabel.setText("One or more missing inputs");
+							outputLabel.setForeground(Color.RED);
+							outputPanel.add(outputLabel);
+						}
+						
+						outputPanel.add(outputLabel);
+						mainFrame.pack();
 					}
 				});
 				
@@ -217,14 +244,55 @@ public class MyLibraryGui {
 		buttonPanel.add(addBookButton);
 		
 		/*
-		 * opens new frame where user provides input
-		 * hides input fields upon submission and provides output
+		 * by pressing the setToRead button, the input panel is populated by a textfield
+		 * and button. when the button is pressed, it will try to find a matching book. if 
+		 * successful, it will report so. if not, it will report it failed. if no input is
+		 * provided it will prompt the user for input
 		 */
 		JButton setToReadButton = new JButton("Set to Read");
 		setToReadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open set to read window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+				
+				JLabel title = new JLabel("Title:");
+				JTextField titleInput = new JTextField(40);
+				JButton doSetToRead = new JButton("Set To Read");
+				doSetToRead.addActionListener(new ActionListener () {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						outputPanel.removeAll();
+						mainFrame.pack();
+						
+						String userIn = titleInput.getText().toLowerCase();
+						JLabel outputLabel = new JLabel();
+						
+						if(!userIn.equals("")) { // if there is input
+							ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(1, userIn);
+							if (matchingNodes.size() != 0) { // if there is a found book
+								CONTROLLER.setToRead(userIn);
+								outputLabel.setText(matchingNodes.get(0).getBook().toString() + " was read");
+								outputLabel.setForeground(Color.GREEN);
+							} else {
+								outputLabel.setText("Book not found");
+								outputLabel.setForeground(Color.RED);
+							}
+						} else {
+							outputLabel.setText("Please provide input");
+							outputLabel.setForeground(Color.RED);
+						}
+						
+						outputPanel.add(outputLabel);
+						mainFrame.pack();
+					}
+				});
+				
+				inputPanel.add(title, BorderLayout.WEST);
+				inputPanel.add(titleInput, BorderLayout.CENTER);
+				inputPanel.add(doSetToRead, BorderLayout.EAST);
+				
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(setToReadButton);
@@ -237,7 +305,47 @@ public class MyLibraryGui {
 		rateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open rate window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+				
+				JLabel title = new JLabel("Title:");
+				JTextField titleIn = new JTextField(40);
+				JComboBox<Integer> ratingIn = new JComboBox<Integer>(new Integer[] {1, 2, 3, 4, 5});
+				JButton doRate = new JButton("Rate");
+				doRate.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JLabel outputLabel = new JLabel();
+						String titleInput = titleIn.getText().toString();
+						
+						if (!titleInput.equals("")) { // if a title is provided
+							ArrayList<LibraryNode> matchingNodes = CONTROLLER.search(1, titleInput);
+							if (matchingNodes.size() != 0) { // if a matching node is found
+								CONTROLLER.rate(titleInput, (Integer)ratingIn.getSelectedItem());
+								outputLabel.setText(matchingNodes.get(0).getBook().toString() + " was rated");
+								outputLabel.setForeground(Color.GREEN);
+							} else {
+								outputLabel.setText("Book not found");
+								outputLabel.setForeground(Color.RED);
+							}
+							
+							titleIn.setText("");
+						} else {
+							outputLabel.setText("Please provide input");
+							outputLabel.setForeground(Color.RED);
+						}
+						
+						outputPanel.add(outputLabel);
+						mainFrame.pack();
+					}
+				});
+				
+				inputPanel.add(title, BorderLayout.WEST);
+				inputPanel.add(titleIn, BorderLayout.CENTER);
+				inputPanel.add(ratingIn, BorderLayout.CENTER);
+				inputPanel.add(doRate, BorderLayout.EAST);
+				
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(rateButton);
@@ -270,7 +378,7 @@ public class MyLibraryGui {
 				JLabel output = new JLabel();
 
 				try {
-					LibraryNode suggestion = controller.suggestRead();
+					LibraryNode suggestion = CONTROLLER.suggestRead();
 					output.setText(suggestion.getBook().getTitle() + ", by " + suggestion.getBook().getAuthor());
 				} catch (ArithmeticException exception) {
 					output.setText("Add books to your library first!");
@@ -317,7 +425,7 @@ public class MyLibraryGui {
 
 				if (inputEnteredFlag) {
 					try {
-						controller.addBooks(inputString);
+						CONTROLLER.addBooks(inputString);
 						outputLabel.setText("Books added successfully");
 						outputLabel.setForeground(Color.GREEN);
 					} catch (FileNotFoundException ex) {
