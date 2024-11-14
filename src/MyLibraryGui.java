@@ -11,6 +11,7 @@ import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
@@ -357,7 +358,48 @@ public class MyLibraryGui {
 		getBooksButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// open getbooks window
+				inputPanel.removeAll();
+				outputPanel.removeAll();
+
+				inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				outputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 25, 20));
+
+				String[] dropdownOptions = new String[] {"Title", "Author", "Read", "Unread"};
+				JComboBox dropdown = new JComboBox<String>(dropdownOptions);
+				JLabel outputLabel = new JLabel();
+				JTextArea outputText = new JTextArea(10, 70);
+
+				outputLabel.setForeground(Color.RED);
+				outputText.setEditable(false);
+
+				inputPanel.add(new JLabel("Sort by:"));
+				inputPanel.add(dropdown);
+
+				JButton getBooksButton = new JButton("Get Books");
+				getBooksButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent event) {
+						// Converts the array to a list and uses the indexOf method
+						// to get the index of the element and then adds 1 to it.
+						int userInput = Arrays.asList(dropdownOptions).indexOf((String) dropdown.getSelectedItem()) + 1;
+						ArrayList<LibraryNode> bookList = CONTROLLER.getBooks(userInput);
+
+						outputText.setText("");
+
+						if (bookList.size() == 0) {
+							outputLabel.setText("No books found!");
+						} else {
+							outputLabel.setText("");
+							for (LibraryNode book : bookList) {
+								outputText.append(book.toString() + '\n');
+							}
+						}
+					}
+				});
+				inputPanel.add(getBooksButton);
+				outputPanel.add(new JScrollPane(outputText));
+				outputPanel.add(outputLabel);
+				mainFrame.pack();
 			}
 		});
 		buttonPanel.add(getBooksButton);
@@ -407,7 +449,6 @@ public class MyLibraryGui {
 				JLabel inputLabel = new JLabel();
 				JLabel outputLabel = new JLabel();
 				
-				// When the user clicks this button, the text will be saved.
 				JButton enterButton = new JButton("Enter");
 				enterButton.addActionListener(new ActionListener() {
 					@Override
