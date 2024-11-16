@@ -367,7 +367,7 @@ public class MyLibraryGui {
 				outputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 25, 20));
 
 				String[] dropdownOptions = new String[] {"Title", "Author", "Read", "Unread"};
-				JComboBox dropdown = new JComboBox<String>(dropdownOptions);
+				JComboBox<String> dropdown = new JComboBox<String>(dropdownOptions);
 				JLabel outputLabel = new JLabel();
 				JTextArea outputText = new JTextArea(10, 70);
 
