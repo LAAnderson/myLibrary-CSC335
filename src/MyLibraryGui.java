@@ -350,9 +350,11 @@ public class MyLibraryGui {
 		buttonPanel.add(rateButton);
 		
 		/*
-		 * opens new frame where user provides input
-		 * hides input fields upon submission and provides output
-		 * refer to API above constructor
+		 * Creates a JComboBox where the user can provide
+		 * input from a selection. When the new "Get Books"
+		 * button beside the input is pressed, we feed the
+		 * input to the model and display the output in an
+		 * uneditable, scrollable text area.
 		 */
 		JButton getBooksButton = new JButton("Get Books");
 		getBooksButton.addActionListener(new ActionListener() {
@@ -405,7 +407,7 @@ public class MyLibraryGui {
 		buttonPanel.add(getBooksButton);
 		
 		/*
-		 * opens new frame with output (no need for input)
+		 * Displays a JLabel with the output (no input).
 		 */
 		JButton suggestReadButton = new JButton("Suggest Read");
 		suggestReadButton.addActionListener(new ActionListener() {
@@ -432,8 +434,9 @@ public class MyLibraryGui {
 		buttonPanel.add(suggestReadButton);
 		
 		/*
-		 * opens new frame where user provides input
-		 * hides input fields upon submission and provides output
+		 * Creates a text field for the user to enter the
+		 * filename. Adds the books through the controller,
+		 * and outputs whether it was successful or not.
 		 */
 		JButton addBooksButton = new JButton("Add Books");
 		addBooksButton.addActionListener(new ActionListener() {
@@ -476,9 +479,8 @@ public class MyLibraryGui {
 		buttonPanel.add(addBooksButton);
 		
 		/**
-		 * @see below is an example of how to implement the opening window. 
-		 * Note the use of DISPOSE_ON_CLOSE instead of EXIT_ON_CLOSE. the latter 
-		 * will terminate the entire program
+		 * Creates a text area in the output panel and
+		 * adds the help messages.
 		 */
 		JButton helpButton = new JButton("Help");
 		helpButton.addActionListener(new ActionListener() {
